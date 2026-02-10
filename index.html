@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formex | Алюминиевые профильные системы</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F172A', // Dark Slate (Corporate)
+                        accent: '#DC2626', // Industrial Red (CTA)
+                        secondary: '#64748B', // Aluminum Grey
+                        light: '#F8FAFC', // Light Background
+                        surface: '#FFFFFF',
+                    },
+                    fontFamily: {
+                        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                        display: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94A3B8;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748B;
+        }
+        
+        /* CSS Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Stagger delays */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        .delay-500 { transition-delay: 500ms; }
+
+        /* Utility for hiding elements */
+        .hidden { display: none !important; }
+    </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-light text-slate-800 antialiased selection:bg-accent selection:text-white pb-16 md:pb-0">
+
+    <!-- Header -->
+    <header id="main-header" class="fixed w-full z-50 transition-all duration-300 border-b bg-white/95 border-transparent py-5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="text-3xl font-bold tracking-tighter text-primary">
+                        Formex
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden lg:flex space-x-8">
+                    <a href="#hero" class="text-sm font-bold uppercase text-slate-600 hover:text-accent transition-colors">Главная</a>
+                    <a href="#about" class="text-sm font-bold uppercase text-slate-600 hover:text-accent transition-colors">О нас</a>
+                    <a href="#catalog" class="text-sm font-bold uppercase text-slate-600 hover:text-accent transition-colors">Продукция</a>
+                    <a href="#production" class="text-sm font-bold uppercase text-slate-600 hover:text-accent transition-colors">Производство</a>
+                    <a href="#projects" class="text-sm font-bold uppercase text-slate-600 hover:text-accent transition-colors">Проекты</a>
+                    <a href="#partners" class="text-sm font-bold uppercase text-slate-600 hover:text-accent transition-colors">Партнерам</a>
+                    <a href="#contact" class="text-sm font-bold uppercase text-slate-600 hover:text-accent transition-colors">Контакты</a>
+                </nav>
+
+                <!-- Desktop CTA -->
+                <div class="hidden lg:flex items-center gap-4">
+                    <div class="text-right hidden xl:block">
+                        <a href="tel:+996773411114" class="block text-lg font-bold text-primary hover:text-accent transition-colors">+996 (773) 41 11 14</a>
+                        <span class="text-xs text-slate-500">Бишкек, Пн-Пт 9:00-18:00</span>
+                    </div>
+                    <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 border-2 border-primary text-primary hover:bg-slate-50 focus:ring-primary py-2 px-4">
+                        Скачать каталог
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-primary focus:outline-none p-2">
+                        <svg id="icon-menu" class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                        <svg id="icon-close" class="h-8 w-8 hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 w-full bg-white border-b border-slate-200 shadow-xl py-6 px-4 flex flex-col space-y-4 h-screen overflow-y-auto pb-20">
+            <a href="#hero" class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mobile-link">Главная</a>
+            <a href="#about" class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mobile-link">О нас</a>
+            <a href="#catalog" class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mobile-link">Продукция</a>
+            <a href="#production" class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mobile-link">Производство</a>
+            <a href="#projects" class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mobile-link">Проекты</a>
+            <a href="#partners" class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mobile-link">Партнерам</a>
+            <a href="#contact" class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-2 mobile-link">Контакты</a>
+            <div class="mt-8">
+                <p class="text-xs text-slate-500 uppercase mb-2">Контакты</p>
+                <a href="tel:+996773411114" class="block text-xl font-bold text-primary mb-2">+996 (773) 41 11 14</a>
+                <p class="text-sm text-slate-600">Бишкек, ул. Чолпонатинская 2а</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="hero" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-slate-900 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80" alt="Modern Facade" class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent"></div>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <div class="reveal delay-100">
+                    <span class="inline-block py-1 px-3 border border-white/30 rounded-full text-white text-xs font-bold uppercase tracking-wider mb-6 bg-white/10">Производство алюминиевых систем</span>
+                </div>
+                <div class="reveal delay-200">
+                    <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">Комплексные решения <br/> для современной архитектуры</h1>
+                </div>
+                <div class="reveal delay-400">
+                    <p class="text-lg text-slate-300 mb-8 max-w-xl leading-relaxed">Разработка и производство алюминиевых профильных систем: окна, двери, фасады. Европейское качество по доступным ценам.</p>
+                </div>
+                <div class="reveal delay-600 flex flex-col sm:flex-row gap-4">
+                    <button onclick="document.getElementById('catalog').scrollIntoView()" class="inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-accent text-white hover:bg-red-700 focus:ring-accent border border-transparent shadow-sm">Перейти в каталог</button>
+                    <button class="inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 border-2 border-white text-white hover:bg-white hover:text-primary focus:ring-white">Стать дилером</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                <div class="reveal-left">
+                    <div class="mb-12">
+                        <span class="block text-xs font-bold uppercase tracking-widest mb-2 text-accent">Надежность и опыт</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-primary">О компании Formex</h2>
+                        <div class="mt-4 w-16 h-1 bg-accent"></div>
+                    </div>
+                    <div class="prose prose-slate text-slate-600">
+                        <p class="mb-4">Formex — ведущий производитель алюминиевых профильных систем в Кыргызстане. Мы специализируемся на разработке решений для остекления жилых комплексов, бизнес-центров и частных домов.</p>
+                        <p class="mb-6">Собственное производство полного цикла позволяет нам контролировать качество на каждом этапе: от экструзии профиля до порошковой покраски.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="p-4 bg-slate-50 border border-slate-100">
+                            <div class="text-3xl font-bold text-accent mb-1">10+</div>
+                            <div class="text-xs text-slate-500 uppercase font-bold">Лет на рынке</div>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-100">
+                            <div class="text-3xl font-bold text-accent mb-1">500+</div>
+                            <div class="text-xs text-slate-500 uppercase font-bold">Реализованных проектов</div>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex gap-4">
+                        <a href="#" class="flex items-center text-primary font-bold hover:text-accent transition-colors">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
+                            Скачать сертификаты
+                        </a>
+                        <a href="#" class="flex items-center text-primary font-bold hover:text-accent transition-colors">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            Каталог PDF
+                        </a>
+                    </div>
+                </div>
+                <div class="reveal-right delay-200 relative h-full min-h-[400px]">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80" alt="Production" class="w-full h-full object-cover shadow-xl">
+                    <div class="absolute -bottom-6 -left-6 bg-primary p-6 shadow-lg hidden md:block max-w-xs">
+                        <p class="text-white text-sm font-medium">"Мы создаем продукты, которые формируют облик современных городов."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog -->
+    <section id="catalog" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal mb-12">
+                <span class="block text-xs font-bold uppercase tracking-widest mb-2 text-accent">Системные решения</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-primary">Каталог продукции</h2>
+                <div class="mt-4 w-16 h-1 bg-accent"></div>
+            </div>
+
+            <!-- Filters -->
+            <div class="reveal flex flex-wrap gap-2 mb-10">
+                <button onclick="filterCatalog('windows', this)" class="filter-btn flex items-center px-6 py-3 text-sm font-bold uppercase transition-all bg-primary text-white shadow-md">
+                    <span class="mr-2"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
+                    Оконные системы
+                </button>
+                <button onclick="filterCatalog('doors', this)" class="filter-btn flex items-center px-6 py-3 text-sm font-bold uppercase transition-all bg-white text-slate-600 hover:bg-slate-200 border border-slate-200">
+                    <span class="mr-2"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+                    Дверные системы
+                </button>
+                <button onclick="filterCatalog('facades', this)" class="filter-btn flex items-center px-6 py-3 text-sm font-bold uppercase transition-all bg-white text-slate-600 hover:bg-slate-200 border border-slate-200">
+                    <span class="mr-2"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                    Фасадные системы
+                </button>
+                <button onclick="filterCatalog('partitions', this)" class="filter-btn flex items-center px-6 py-3 text-sm font-bold uppercase transition-all bg-white text-slate-600 hover:bg-slate-200 border border-slate-200">
+                    <span class="mr-2"><svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+                    Перегородки
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="product-grid" class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Product 1: Windows -->
+                <div class="reveal product-item bg-white group hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-slate-200 flex flex-col md:flex-row overflow-hidden" data-category="windows">
+                    <div class="w-full md:w-2/5 relative overflow-hidden h-64 md:h-auto">
+                        <img src="https://images.unsplash.com/photo-1503708928676-1cb796a0891e?auto=format&fit=crop&w=800&q=80" alt="Formex W65 Thermo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-accent text-white text-xs font-bold px-2 py-1 uppercase">Теплый</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">Formex W65 Thermo</h3>
+                            <p class="text-slate-600 text-sm mb-4">Теплая оконная система с терморазрывом 24мм. Идеальна для жилых комплексов.</p>
+                            <ul class="space-y-1 mb-6">
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Монтажная глубина: 65мм</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Стеклопакет: до 40мм</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Термомост: Полиамид</li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all border-2 border-primary text-primary hover:bg-slate-50 focus:ring-primary">Тех. каталог</button>
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all bg-accent text-white hover:bg-red-700 focus:ring-accent">Запросить КП</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 2: Doors -->
+                <div class="reveal product-item bg-white group hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-slate-200 flex flex-col md:flex-row overflow-hidden hidden" data-category="doors">
+                    <div class="w-full md:w-2/5 relative overflow-hidden h-64 md:h-auto">
+                        <img src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=800&q=80" alt="Formex D45 Cold" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-accent text-white text-xs font-bold px-2 py-1 uppercase">Холодный</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">Formex D45 Cold</h3>
+                            <p class="text-slate-600 text-sm mb-4">Легкая дверная система для внутренних помещений и входных групп без термоизоляции.</p>
+                            <ul class="space-y-1 mb-6">
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Монтажная глубина: 45мм</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Заполнение: 4-24мм</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Контуров уплотнения: 2</li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all border-2 border-primary text-primary hover:bg-slate-50 focus:ring-primary">Тех. каталог</button>
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all bg-accent text-white hover:bg-red-700 focus:ring-accent">Запросить КП</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 3: Facades -->
+                <div class="reveal product-item bg-white group hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-slate-200 flex flex-col md:flex-row overflow-hidden hidden" data-category="facades">
+                    <div class="w-full md:w-2/5 relative overflow-hidden h-64 md:h-auto">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80" alt="Formex F50 Facade" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-accent text-white text-xs font-bold px-2 py-1 uppercase">Теплый</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">Formex F50 Facade</h3>
+                            <p class="text-slate-600 text-sm mb-4">Стоечно-ригельная фасадная система для остекления зданий любой этажности.</p>
+                            <ul class="space-y-1 mb-6">
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Ширина профиля: 50мм</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Ригели: I-V уровня</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Макс. вес заполнения: 400кг</li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all border-2 border-primary text-primary hover:bg-slate-50 focus:ring-primary">Тех. каталог</button>
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all bg-accent text-white hover:bg-red-700 focus:ring-accent">Запросить КП</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Product 4: Partitions -->
+                <div class="reveal product-item bg-white group hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border border-slate-200 flex flex-col md:flex-row overflow-hidden hidden" data-category="partitions">
+                    <div class="w-full md:w-2/5 relative overflow-hidden h-64 md:h-auto">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Formex P-Office" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 left-4 bg-accent text-white text-xs font-bold px-2 py-1 uppercase">Интерьерный</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2">Formex P-Office</h3>
+                            <p class="text-slate-600 text-sm mb-4">Система офисных перегородок с возможностью установки жалюзи.</p>
+                            <ul class="space-y-1 mb-6">
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Звукоизоляция: 40дБ</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Профиль: 70мм</li>
+                                <li class="text-xs text-slate-500 flex items-center"><svg class="w-3 h-3 text-accent mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Двери: Стекло/Алюминий</li>
+                            </ul>
+                        </div>
+                        <div class="flex gap-3">
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all border-2 border-primary text-primary hover:bg-slate-50 focus:ring-primary">Тех. каталог</button>
+                            <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-4 py-2 text-xs font-bold uppercase tracking-wide transition-all bg-accent text-white hover:bg-red-700 focus:ring-accent">Запросить КП</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Production -->
+    <section id="production" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal mb-12">
+                <span class="block text-xs font-bold uppercase tracking-widest mb-2 text-accent">Технологии</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-primary">Производство</h2>
+                <div class="mt-4 w-16 h-1 bg-accent"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="reveal delay-100 p-8 border border-slate-100 bg-slate-50 hover:border-accent transition-colors group">
+                    <svg class="w-10 h-10 text-primary mb-4 group-hover:text-accent transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><line x1="17" y1="13" x2="17" y2="13.01"/><line x1="12" y1="13" x2="12" y2="13.01"/><line x1="7" y1="13" x2="7" y2="13.01"/></svg>
+                    <h4 class="text-lg font-bold text-primary mb-2">Экструзия</h4>
+                    <p class="text-sm text-slate-600">Современные прессовые комплексы позволяют производить профили сложной конфигурации с высокой точностью.</p>
+                </div>
+                <div class="reveal delay-300 p-8 border border-slate-100 bg-slate-50 hover:border-accent transition-colors group">
+                    <svg class="w-10 h-10 text-primary mb-4 group-hover:text-accent transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                    <h4 class="text-lg font-bold text-primary mb-2">Порошковая покраска</h4>
+                    <p class="text-sm text-slate-600">Автоматизированная линия покраски. Любой цвет по шкале RAL. Гарантия стойкости покрытия до 15 лет.</p>
+                </div>
+                <div class="reveal delay-500 p-8 border border-slate-100 bg-slate-50 hover:border-accent transition-colors group">
+                    <svg class="w-10 h-10 text-primary mb-4 group-hover:text-accent transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <h4 class="text-lg font-bold text-primary mb-2">Контроль качества</h4>
+                    <p class="text-sm text-slate-600">Собственная лаборатория тестирует профиль на прочность, геометрию и стойкость покрытия.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-20 bg-primary text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <div class="reveal">
+                    <span class="block text-xs font-bold uppercase tracking-widest mb-2 text-slate-400">Портфолио</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">Реализованные проекты</h2>
+                    <div class="mt-4 w-16 h-1 bg-white"></div>
+                </div>
+                <button class="hidden md:inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-200 border-2 border-white text-white hover:bg-white hover:text-primary">
+                    Все проекты
+                </button>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="reveal group relative h-80 overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" alt="ЖК Ала-Тоо" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <h4 class="text-2xl font-bold mb-1">ЖК "Ала-Тоо"</h4>
+                        <p class="text-slate-300 text-sm">Остекление фасадов и оконные системы W65.</p>
+                    </div>
+                </div>
+                <div class="reveal delay-200 group relative h-80 overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=800&q=80" alt="БЦ Бишкек Парк" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <h4 class="text-2xl font-bold mb-1">БЦ "Бишкек Парк"</h4>
+                        <p class="text-slate-300 text-sm">Интерьерные перегородки и входные группы.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section id="partners" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal bg-white p-8 md:p-12 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-primary mb-2">Стать дилером Formex</h3>
+                    <p class="text-slate-600 max-w-lg">Приглашаем к сотрудничеству строительные компании и производителей окон. Предлагаем дилерские цены, обучение и образцы продукции.</p>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="document.getElementById('contact').scrollIntoView()" class="inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all bg-accent text-white hover:bg-red-700 focus:ring-accent border border-transparent shadow-sm">
+                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" x2="20" y1="8" y2="14"/><line x1="23" x2="17" y1="11" y2="11"/></svg>
+                        Заполнить анкету
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div class="reveal-left">
+                    <div class="mb-12">
+                        <span class="block text-xs font-bold uppercase tracking-widest mb-2 text-accent">Связаться с нами</span>
+                        <h2 class="text-3xl md:text-4xl font-bold text-primary">Контакты</h2>
+                        <div class="mt-4 w-16 h-1 bg-accent"></div>
+                    </div>
+                    
+                    <div class="space-y-8 mb-10">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-50 flex items-center justify-center text-accent border border-slate-200 mr-6">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Отдел продаж</p>
+                                <a href="tel:+996773411114" class="text-xl font-bold text-primary hover:text-accent transition-colors">+996 (773) 41 11 14</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-50 flex items-center justify-center text-accent border border-slate-200 mr-6">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Email</p>
+                                <a href="mailto:info@formex.kg" class="text-xl font-bold text-primary hover:text-accent transition-colors">info@formex.kg</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 bg-slate-50 flex items-center justify-center text-accent border border-slate-200 mr-6">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 uppercase font-bold tracking-widest mb-1">Адрес</p>
+                                <p class="text-lg font-bold text-primary max-w-xs">Бишкек, ул. Чолпонатинская 2а</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="h-64 bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400">
+                        <span class="flex items-center"><svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Карта (Google Maps)</span>
+                    </div>
+                </div>
+
+                <div class="reveal delay-200">
+                    <div class="bg-white p-8 border border-slate-200 shadow-card">
+                        <h3 class="text-xl font-bold text-primary mb-6">Получить консультацию</h3>
+                        
+                        <div id="form-success" class="flex-col items-center justify-center h-64 text-center hidden active">
+                            <svg class="w-16 h-16 text-green-500 mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                            <h4 class="text-lg font-bold">Заявка принята!</h4>
+                            <p class="text-slate-500">Менеджер свяжется с вами в течение 15 минут.</p>
+                        </div>
+
+                        <form id="lead-form" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Ваше имя *</label>
+                                <input required type="text" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors" placeholder="Иван Петров">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Телефон *</label>
+                                <input required type="tel" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-colors" placeholder="+996 (___) __-__-__">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                   <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Компания</label>
+                                   <input type="text" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-accent outline-none" placeholder="ООО Строй">
+                                </div>
+                                <div>
+                                   <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Город</label>
+                                   <input type="text" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-accent outline-none" placeholder="Бишкек">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Комментарий</label>
+                                <textarea rows="3" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 focus:border-accent outline-none" placeholder="Укажите примерный объем или вопрос"></textarea>
+                            </div>
+                            <div class="flex items-start">
+                                <input required type="checkbox" id="consent" class="mt-1 mr-3">
+                                <label for="consent" class="text-xs text-slate-500">Я согласен на обработку персональных данных согласно <a href="#" class="underline">Политике конфиденциальности</a> *</label>
+                            </div>
+                            <button type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-accent text-white hover:bg-red-700 focus:ring-accent border border-transparent shadow-sm">Отправить заявку</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-slate-400 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="text-2xl font-bold text-white mb-6">Formex</div>
+                    <p class="text-sm mb-6">Производство алюминиевых профильных систем. Комплексные решения для строительства.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Продукция</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#catalog" class="hover:text-white transition-colors">Оконные системы</a></li>
+                        <li><a href="#catalog" class="hover:text-white transition-colors">Дверные системы</a></li>
+                        <li><a href="#catalog" class="hover:text-white transition-colors">Фасады</a></li>
+                        <li><a href="#catalog" class="hover:text-white transition-colors">Перегородки</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Компания</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#about" class="hover:text-white transition-colors">О производстве</a></li>
+                        <li><a href="#projects" class="hover:text-white transition-colors">Проекты</a></li>
+                        <li><a href="#partners" class="hover:text-white transition-colors">Дилерам</a></li>
+                        <li><a href="#contact" class="hover:text-white transition-colors">Контакты</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase text-xs tracking-widest mb-6">Документация</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Политика конфиденциальности</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Обработка персональных данных</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-xs">
+                <p>© 2024 Formex. Все права защищены.</p>
+                <p class="mt-2 md:mt-0">Разработано в соответствии с ТЗ</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Sticky CTA -->
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 p-4 md:hidden z-40 flex gap-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+        <a href="tel:+996773411114" class="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all bg-accent text-white hover:bg-red-700 focus:ring-accent border border-transparent shadow-sm">Позвонить</a>
+        <button onclick="document.getElementById('contact').scrollIntoView()" class="w-full inline-flex items-center justify-center px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all border-2 border-primary text-primary hover:bg-slate-50 focus:ring-primary">Заявка</button>
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+        // --- Mobile Menu Toggle ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconMenu = document.getElementById('icon-menu');
+        const iconClose = document.getElementById('icon-close');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('hidden');
+            iconMenu.classList.toggle('hidden');
+            iconClose.classList.toggle('hidden');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // --- Sticky Header Scroll ---
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.classList.add('bg-white', 'border-slate-200', 'shadow-sm', 'py-3');
+                header.classList.remove('bg-white/95', 'border-transparent', 'py-5');
+            } else {
+                header.classList.add('bg-white/95', 'border-transparent', 'py-5');
+                header.classList.remove('bg-white', 'border-slate-200', 'shadow-sm', 'py-3');
+            }
+        });
+
+        // --- Catalog Filtering ---
+        function filterCatalog(category, btnElement) {
+            // Update active button state
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-200', 'border', 'border-slate-200');
+            });
+            btnElement.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-200', 'border', 'border-slate-200');
+            btnElement.classList.add('bg-primary', 'text-white', 'shadow-md');
+
+            // Show/Hide products
+            const products = document.querySelectorAll('.product-item');
+            products.forEach(product => {
+                if (product.dataset.category === category) {
+                    product.classList.remove('hidden');
+                } else {
+                    product.classList.add('hidden');
+                }
+            });
+        }
+
+        // --- Form Handling ---
+        const leadForm = document.getElementById('lead-form');
+        const formSuccess = document.getElementById('form-success');
+
+        leadForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            leadForm.classList.add('hidden');
+            formSuccess.classList.remove('hidden');
+            formSuccess.classList.add('flex');
+            
+            // Reset after 3 seconds
+            setTimeout(() => {
+                leadForm.reset();
+                formSuccess.classList.add('hidden');
+                formSuccess.classList.remove('flex');
+                leadForm.classList.remove('hidden');
+            }, 3000);
+        });
+
+        // --- Reveal Animation ---
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
